@@ -6,9 +6,9 @@ from noise import add_white_noise
 from dsp_baselines import wiener_filter, moving_average_filter
 from metrics import calculate_mse, calculate_snr
 
-# --------------------------------------------------
+
 # Experiment setup
-# --------------------------------------------------
+
 duration = 10
 fs = 100
 f0, f1 = 1, 10
