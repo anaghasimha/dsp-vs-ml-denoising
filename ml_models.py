@@ -21,7 +21,7 @@ class WindowLinearModel(nn.Module):
     
     def __init__(self, win: int):
         super().__init__()
-        self.fc = nn.Linear(win * 2, 1)  
+        self.fc = nn.Linear(win, 1)  
 
     def forward(self, feat: torch.Tensor) -> torch.Tensor:
         
