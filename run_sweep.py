@@ -19,7 +19,7 @@ def build_dataset(duration, fs, snr_db, num_samples, seed=0):
     data = []
 
     for _ in range(num_samples):
-        # randomize chirp slightly
+        
         f0 = float(rng.uniform(0.5, 2.0))
         f1 = float(rng.uniform(6.0, 12.0))
 
@@ -57,11 +57,11 @@ def make_window_matrix(noisy_signal, win):
     X = np.zeros((N, win), dtype=np.float32)
     for i in range(N):
         X[i, :] = ypad[i:i+win]
-    return X  # [N, win]
+    return X  
 
 
 
-# DSP evaluation (per sample)
+# DSP evaluation 
 
 def eval_dsp_methods(sample, fs):
     x = sample["x"]
@@ -205,7 +205,7 @@ def main():
     test_snr_list = [-5, 0, 5, 10, 15, 20]
 
     
-    train_snr_list = [5]          
+    train_snr_list = [-5, 0, 5, 10, 15, 20]          
     train_sizes = [200, 2000]     
     test_size = 200
 
