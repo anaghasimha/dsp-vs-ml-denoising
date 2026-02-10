@@ -206,19 +206,19 @@ def main():
 
     
     train_snr_list = [-5, 0, 5, 10, 15, 20]          
-    train_sizes = [200, 2000]     
+    train_sizes = [50,100,200,500,1000,2000]     
     test_size = 200
 
     
-    cfg = TrainCfg(epochs=5, lr=1e-3, batch_size=32)
+    cfg = TrainCfg(epochs=10, lr=1e-3, batch_size=32)
     win = 11
 
     results = []
 
     for train_snr in train_snr_list:
         for train_n in train_sizes:
-            
-            train_data = build_dataset(duration, fs, train_snr, num_samples=train_n, seed=0)
+            train_seed = 10000 + int(train_snr)*100 + train_n
+            train_data = build_dataset(duration, fs, train_snr, num_samples=train_n, seed=train_seed)
 
             
             cnn = CNNDenoiser(channels=16, k=5)
@@ -286,3 +286,12 @@ def main():
 if __name__ == "__main__":
     main()
 
+# Increasing the training budget eliminated non-monotonic learning effects observed
+#  at smaller epoch counts, confirming that earlier regressions were due to 
+# undertraining. However, even with sufficient optimization, increased training size
+#  does not improve robustness to noise-level mismatch. In fact, CNN denoisers 
+# continue to exhibit strong performance degradation under mismatched train/test 
+# SNRs, despite improved MSE. This highlights a fundamental limitation of 
+# noise-specific learned priors and a loss–metric mismatch, rather than a data or 
+# optimization issue. Classical Wiener filtering remains stable across conditions 
+# and can outperform learned models under severe mismatch.
