@@ -40,10 +40,10 @@ class PairDataset(Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
-        x = self.data[idx]["x"]  # [N]
-        y = self.data[idx]["y"]  # [N]
-        y_t = torch.from_numpy(y).unsqueeze(0)  # [1, N]
-        x_t = torch.from_numpy(x).unsqueeze(0)  # [1, N]
+        x = self.data[idx]["x"]  
+        y = self.data[idx]["y"]  
+        y_t = torch.from_numpy(y).unsqueeze(0)  
+        x_t = torch.from_numpy(x).unsqueeze(0)  
         return y_t, x_t
 
 
@@ -126,8 +126,8 @@ def train_cnn(model, train_data, cfg: TrainCfg):
 @torch.no_grad()
 def eval_cnn(model, sample, device):
     model.eval()
-    y = torch.from_numpy(sample["y"]).float().unsqueeze(0).unsqueeze(0).to(device)  # [1,1,N]
-    pred = model(y).cpu().squeeze(0).squeeze(0).numpy().astype(np.float32)          # [N]
+    y = torch.from_numpy(sample["y"]).float().unsqueeze(0).unsqueeze(0).to(device)  
+    pred = model(y).cpu().squeeze(0).squeeze(0).numpy().astype(np.float32)          
     return pred
 
 
